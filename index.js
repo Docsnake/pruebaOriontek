@@ -1,12 +1,11 @@
-var customers;
-var filteredCustomers;
-var idFilterValue = '', nameFilterValue = '', minDirectionsFilterValue = 0, maxDirectionsFilterValue = 99;
+import {filterByMinDirections, filterByMaxDirections, filterByName, filterByID} from './modules/filters.js';
 var order = 'id';
 var itemsPerPage = 10;
 var page = 0;
 const tableContainer = document.getElementById('tableContainer');
 const modalContainer = document.getElementById('modalContainer');
 const modalBackdrop = document.getElementById('modalBackdrop');
+
 const filterName = document.getElementById('filterName');
 const filterID = document.getElementById('filterID');
 const filterDirectionsMin = document.getElementById('filterDirectionsMin');
@@ -17,56 +16,30 @@ filterDirectionsMax.addEventListener('change', filterByMaxDirections);
 filterDirectionsMin.addEventListener('change', filterByMinDirections);
 filterName.addEventListener('change', filterByName);
 filterID.addEventListener('change', filterByID);
-const filters = customer => {
-    return (customer.name.includes(nameFilterValue)) && 
-        (customer.id.includes(idFilterValue)) &&
-        (customer.directions.length>minDirectionsFilterValue) &&
-        (customer.directions.length<maxDirectionsFilterValue)
-}
-function filterByMinDirections(e){
-    minDirectionsFilterValue = e.target.value;
-    filteredCustomers = customers.filter(filters)
-    generateTable();
-}
-function filterByMaxDirections(e){
-    maxDirectionsFilterValue = e.target.value;
-    filteredCustomers = customers.filter(filters)
-    generateTable();
-}
-function filterByName(e){
-    nameFilterValue = e.target.value;
-    filteredCustomers = customers.filter(filters)
-    generateTable();
-}
-function filterByID(e){
-    idFilterValue = e.target.value;
-    filteredCustomers = customers.filter(filters)
-    generateTable();
-}
 function init(){
     fetch('/getCustomers')   
     .then(response => response.json())
-    .then(data => filteredCustomers=customers=data)
-    .then(generateTable);
+    .then(data => window.filteredCustomers=window.customers=data)
+    .then(window.generateTable);
 }
 
-function modifyCustomer(customerId){
+window.modifyCustomer = function(customerId){
     let newName = document.getElementById('newName').value;
     fetch('/modifyCustomer?customer='+customerId+'&newName='+newName) 
     .then(response => response.json())
-    .then(data => filteredCustomers=customers=data)
-    .then(generateTable);
+    .then(data => window.filteredCustomers=window.customers=data)
+    .then(window.generateTable);
 }
-function addDirection(customerId){
+window.addDirection = function(customerId){
     let newName = document.getElementById('newDirection').value;
     fetch('/addDirection?customer='+customerId+'&newDirection='+newName) 
     .then(response => response.json())
-    .then(data => filteredCustomers=customers=data)
-    .then(generateTable);
+    .then(data => window.filteredCustomers=window.customers=data)
+    .then(window.generateTable);
 }
 
-function showModalModifyCustomer(customerId){
-    let customer = customers.find(customer => customer.id === customerId)
+window.showModalModifyCustomer = function(customerId){
+    let customer = window.customers.find(customer => customer.id === customerId)
     modalContainer.innerHTML = `
         <h3>modify customer ${customerId}</h3>
         <label>name: </label><input id="newName" type="text" value="${customer.name}"/>
@@ -74,8 +47,7 @@ function showModalModifyCustomer(customerId){
     `;
     modalBackdrop.classList.remove('hidden')
 }
-function showModalAddDirection(customerId){
-    let customer = customers.find(customer => customer.id === customerId)
+window.showModalAddDirection = function(customerId){
     modalContainer.innerHTML = `
         <h3>add direction to customer ${customerId}</h3>
         <label>new direction: </label><input id="newDirection" type="text"/>
@@ -84,53 +56,53 @@ function showModalAddDirection(customerId){
     modalBackdrop.classList.remove('hidden')
 }
 
-function deleteCustomer(customerId){
+window.deleteCustomer = function(customerId){
     console.log(customerId)
     fetch('/deleteCustomer?customer='+customerId) 
     .then(response => response.json())
-    .then(data => filteredCustomers=customers=data)
-    .then(generateTable);
+    .then(data => window.filteredCustomers=window.customers=data)
+    .then(window.generateTable);
 }
 
-function deleteDirection(customerId, direction){
+window.deleteDirection = function(customerId, direction){
     fetch('/deleteDirection?customer='+customerId+'&direction='+direction) 
     .then(response => response.json())
-    .then(data => filteredCustomers=customers=data)
-    .then(generateTable);
+    .then(data => window.filteredCustomers=window.customers=data)
+    .then(window.generateTable);
 }
 
-function orderBy(orderByPreference){
+window.orderBy = function(orderByPreference){
     if(order === orderByPreference){
-        filteredCustomers = filteredCustomers.reverse();
+        window.filteredCustomers = window.filteredCustomers.reverse();
     }else{
         order = orderByPreference;
-        filteredCustomers.sort((a,b) => a[order] < b[order] ? -1 : 1 );
+        window.filteredCustomers.sort((a,b) => a[order] < b[order] ? -1 : 1 );
     }
-    generateTable();
+    window.generateTable();
 }
 
-function previousPage(){
+window.previousPage = function(){
     if(page <= 0) return;
     page--;
     pageInput.value = page;
-    generateTable();
+    window.generateTable();
 }
-function nextPage(){
-    let maxPage = Math.ceil(filteredCustomers.length/10)
+window.nextPage = function(){
+    let maxPage = Math.ceil(window.filteredCustomers.length/10)
     if(page >= maxPage) return;
     page++;
     pageInput.value = page;
-    generateTable();
+    window.generateTable();
 }
 function changePage(e){
     let newPage = e.target.value;
-    let maxPage = Math.ceil(filteredCustomers.length/10)
+    let maxPage = Math.ceil(window.filteredCustomers.length/10)
     if(newPage >= maxPage || newPage < 0) return;
     page = newPage;
-    generateTable();
+    window.generateTable();
 }
 
-function showModalAddCustomer(){
+window.showModalAddCustomer = function(){
     modalContainer.innerHTML = `
         <h3>add customer</h3>
         <label>new customer name: </label><input id="newName" type="text"/>
@@ -140,22 +112,22 @@ function showModalAddCustomer(){
 
 }
 
-function addCustomer(){
+ window.addCustomer= function(){
     let newName = document.getElementById('newName').value;
     fetch('/addCustomer?newName='+newName) 
     .then(response => response.json())
-    .then(data => filteredCustomers=customers=data)
-    .then(generateTable);
+    .then(data => window.filteredCustomers=window.customers=data)
+    .then(window.generateTable);
 }
 
-function generateTable() {
+window.generateTable = function() {
     let data = ``;
     const actions = (customer) => `
         <a href="#" onclick="showModalModifyCustomer('`+customer.id+`')">modify</a>
         <a href="#" onclick="deleteCustomer('`+customer.id+`')">delete</a>
     `;
     const directions = (customer) => {
-        directionList = ``;
+        let directionList = ``;
         customer.directions.forEach((direction)=>directionList+=`<li>${direction}<a href="#" onclick="deleteDirection('${customer.id}', '${direction}')">delete</a></li>`)
         return `
         <a href="#" onclick="showModalAddDirection('${customer.id}')">Add direction</a>
@@ -164,7 +136,7 @@ function generateTable() {
         </ol>
     `};
 
-    filteredCustomers.slice(page*10, (page*10)+10).forEach(customer => {
+    window.filteredCustomers.slice(page*10, (page*10)+10).forEach(customer => {
         data+= `
         <tr>
             <td>${customer.id}</td>

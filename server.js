@@ -51,8 +51,14 @@ app.get("/", (req, res) => {
 app.get("/index.js", (req, res) => {
   res.sendFile(__dirname + "/index.js");
 });
+app.get("/modules/filters.js", (req, res) => {
+  res.sendFile(__dirname + "/modules/filters.js");
+});
 app.get("/styles.css", (req, res) => {
   res.sendFile(__dirname + "/styles.css");
+});
+app.get("/arrow.png", (req, res) => {
+  res.sendFile(__dirname + "/arrow.png");
 });
 app.get("/getCustomers", (req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -86,6 +92,7 @@ app.get("/addDirection", (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(customers));
 });
+
 
 app.get("/addCustomer", (req, res) => {
   const queryObject = url.parse(req.url, true).query;

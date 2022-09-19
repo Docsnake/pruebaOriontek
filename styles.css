@@ -66,3 +66,13 @@ table, th, td {
     width: 25%; 
     padding: 12px 15px;
   }
+
+.paginator input{
+    width: 25px;
+}
+thead img{
+    transform: rotate(180deg);
+}
+thead img.rotate{
+    transform: rotate(0deg);
+}
