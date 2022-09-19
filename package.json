@@ -1,0 +1,23 @@
+{
+  "name": "pruebaoriontek",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Docsnake/pruebaOriontek.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Docsnake/pruebaOriontek/issues"
+  },
+  "homepage": "https://github.com/Docsnake/pruebaOriontek#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="topControls">
+            <fieldset class="filters" title="Filters">
+            <legend>Filters</legend>
+            <label>ID</label><input type="text" id="filterID"/>
+            <label>Nombre</label><input type="text" id="filterName"/>
+            <label>Min. directions</label><input type="number" value=0 id="filterDirectionsMin"/>
+            <label>Max. directions</label><input type="number" value=99 id="filterDirectionsMax"/>
+        </fieldset>
+        <div class="paginator">
+            <a href="#" onclick="previousPage()">previous page</a>
+            <input type="number" id="pageInput" value=0 />
+            <a href="#" onclick="nextPage()">next page</a>
+        </div>
+        <a href="#" onclick="showModalAddCustomer()">Add Customer</a>
+    </div>
+        <div id="tableContainer"></div>
+        <div class="modalBackdrop hidden" id="modalBackdrop"><div class="modal" id="modalContainer"></div></div>
+        <script src="./index.js"></script>
+    </body>
+</html>

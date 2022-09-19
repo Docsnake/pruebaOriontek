@@ -1,0 +1,68 @@
+body{
+
+    font-size: 0.9em;
+    font-family: sans-serif;
+}
+.modal{
+    position:absolute;
+    left:calc(50% - 250px);
+    top:calc(50% - 90px);
+    border:1px solid black;
+    background: #fff;
+    padding: 50px;
+}
+.modalBackdrop{
+    position:absolute;
+    background-color:rgba(0, 0, 0, 0.5);
+    top: 0;
+    bottom: 0;
+    left:0;
+    right: 0;
+}
+.hidden{
+    display: none;
+}
+.topControls{
+    color: #ffffff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #01493b;
+    padding: 20px; 
+    text-align: center;
+}
+.topControls a{
+    color: #fff;
+}
+thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+tbody tr{
+    border-bottom: 1px solid #dddddd;
+}
+tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+.topControls div, .topControls fieldset{
+    display: inline-block;
+    margin-right: 30px;
+}
+table, th, td {
+    border: 1px solid black;
+  }
+  table{
+    width: 100%;
+    margin-top: 100px;
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+  th, td{
+    width: 25%; 
+    padding: 12px 15px;
+  }
