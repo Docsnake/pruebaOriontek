@@ -97,11 +97,14 @@ app.get("/addDirection", (req, res) => {
 app.get("/addCustomer", (req, res) => {
   const queryObject = url.parse(req.url, true).query;
   customerCounter++;
+  console.log('customer added', queryObject.newName)
+
   customers.push({
     id: 'customer'+customerCounter,
     name: queryObject.newName,
     directions: []
   })
+  console.table(customers)
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(customers));
 });

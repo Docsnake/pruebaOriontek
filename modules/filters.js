@@ -3,8 +3,8 @@ var idFilterValue = '', nameFilterValue = '', minDirectionsFilterValue = 0, maxD
 const filters = customer => {
     return (customer.name.includes(nameFilterValue)) && 
         (customer.id.includes(idFilterValue)) &&
-        (customer.directions.length>minDirectionsFilterValue) &&
-        (customer.directions.length<maxDirectionsFilterValue)
+        (customer.directions.length>=minDirectionsFilterValue) &&
+        (customer.directions.length<=maxDirectionsFilterValue)
 }
 function filterByMinDirections(e){
     minDirectionsFilterValue = e.target.value;
